@@ -1,0 +1,33 @@
+{% extends "common/layout.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <h2 class="fw-bold mb-4">My Profile</h2>
+        <div class="card p-4 shadow-sm mb-4">
+            <h5 class="border-bottom pb-2 mb-3">Personal Details</h5>
+            <form>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Full Name</label>
+                        <input type="text" class="form-control" value="{{ current_user.name }}">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Email Address</label>
+                        <input type="email" class="form-control" value="{{ current_user.email }}" readonly>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="card p-4 shadow-sm border-info">
+            <h5 class="text-info border-bottom pb-2 mb-3"><i class="bi bi-key"></i> Cryptographic Identity</h5>
+            <p class="small text-muted">Your ElGamal keys are generated and stored securely in the system. These are
+                required for all document accesses.</p>
+            <div class="bg-light p-3 rounded">
+                <code>Public Key (p, g, h): {{ current_user.public_key }}</code>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

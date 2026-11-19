@@ -1,0 +1,33 @@
+{% extends "common/layout.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-10 mx-auto">
+        <h2 class="fw-bold mb-4">Payment Tracking</h2>
+        <div class="card p-4 shadow-sm">
+            <table class="table table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Client</th>
+                        <th>Policy</th>
+                        <th>Amount Due</th>
+                        <th>Due Date</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>John Doe</td>
+                        <td>#1004</td>
+                        <td>$150.00</td>
+                        <td>2024-03-15</td>
+                        <td><span class="badge bg-warning">Upcoming</span></td>
+                        <td><button class="btn btn-sm btn-outline-primary">Remind</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

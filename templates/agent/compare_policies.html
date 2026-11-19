@@ -1,0 +1,48 @@
+{% extends "common/layout.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <h2 class="fw-bold mb-4">Compare Life Insurance Policies</h2>
+
+        <div class="table-responsive">
+            <table class="table table-bordered bg-white shadow-sm">
+                <thead class="table-primary text-center">
+                    <tr>
+                        <th>Feature</th>
+                        <th>Term Life Basic</th>
+                        <th>Whole Life Premium</th>
+                        <th>Variable Life Gold</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Coverage</strong></td>
+                        <td>$100k - $500k</td>
+                        <td>$500k - $2M</td>
+                        <td>Unlimited</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Premium</strong></td>
+                        <td>Low (Fixed)</td>
+                        <td>High (Fixed)</td>
+                        <td>Flexible</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Cash Value</strong></td>
+                        <td>None</td>
+                        <td>Slow Growth</td>
+                        <td>Investment-Linked</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Complexity</strong></td>
+                        <td>Low</td>
+                        <td>Medium</td>
+                        <td>High</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

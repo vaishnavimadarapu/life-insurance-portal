@@ -1,0 +1,43 @@
+{% extends "common/layout.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-10 mx-auto">
+        <h2 class="fw-bold mb-4">System-Wide Search</h2>
+
+        <form method="GET" action="{{ url_for('admin_search') }}" class="mb-5">
+            <div class="input-group input-group-lg">
+                <input type="text" name="q" class="form-control"
+                    placeholder="Search for clients, agents, policy IDs or emails..."
+                    value="{{ request.args.get('q', '') }}">
+                <button class="btn btn-primary" type="submit">Search</button>
+            </div>
+        </form>
+
+        {% if query %}
+        <h4 class="mb-3">Results for "{{ query }}"</h4>
+
+        {% if results %}
+        <div class="card p-3 shadow-sm">
+            <ul class="list-group list-group-flush">
+                {% for r in results %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <div>
+                        <span class="badge bg-secondary me-2">{{ r.type|capitalize }}</span>
+                        <strong>{{ r.title }}</strong>
+                        <div class="text-muted small">{{ r.subtitle }}</div>
+                    </div>
+                    <span class="text-muted small">{{ r.date }}</span>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% else %}
+        <div class="alert alert-light border text-center py-5">
+            No results found matching your search criteria.
+        </div>
+        {% endif %}
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

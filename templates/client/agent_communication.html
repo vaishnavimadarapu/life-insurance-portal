@@ -1,0 +1,60 @@
+{% extends "common/layout.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-10 mx-auto">
+        <h2 class="fw-bold mb-4">Secure Inbox</h2>
+        <div class="card p-3 mb-4 bg-light border-0">
+            <p class="mb-0 small text-muted"><i class="bi bi-info-circle"></i> Messages are decrypted instantly using
+                your local ElGamal private key.</p>
+        </div>
+
+        {% for msg in messages %}
+        <div class="card mb-3 shadow-sm border-0">
+            <div class="card-body">
+                <div class="d-flex justify-content-between mb-2">
+                    <h6 class="fw-bold mb-0">From: {{ msg.sender }}</h6>
+                    <span class="text-muted small">{{ msg.timestamp }}</span>
+                </div>
+                <div class="p-3 bg-light rounded text-dark">
+                    {{ msg.text }}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+
+        <div class="mt-4 text-center">
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newMsgModal">Send Secure
+                Message</button>
+        </div>
+    </div>
+</div>
+
+<!-- Send Message Modal -->
+<div class="modal fade" id="newMsgModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">New Secure Message</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form action="{{ url_for('send_message') }}" method="POST">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Recipient Email</label>
+                        <input type="email" name="recipient_email" class="form-control" placeholder="agent@example.com"
+                            required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Message</label>
+                        <textarea name="message" class="form-control" rows="4"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Encrypt & Send</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

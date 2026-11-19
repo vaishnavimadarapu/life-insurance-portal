@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Insurance AI Chatbot</title>
+
+    <style>
+
+        body{
+            font-family:Arial;
+            background:#f5f5f5;
+        }
+
+        #chat-box{
+
+            width:700px;
+            height:400px;
+            border:1px solid #ccc;
+            background:white;
+            overflow-y:scroll;
+            margin:auto;
+            padding:15px;
+
+        }
+
+        #message{
+
+            width:600px;
+            padding:10px;
+
+        }
+
+        button{
+
+            padding:10px 20px;
+            cursor:pointer;
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<h2 align="center">Life Insurance AI Assistant</h2>
+
+<div id="chat-box"></div>
+
+<br>
+
+<center>
+
+<input
+type="text"
+id="message"
+placeholder="Ask your question...">
+
+<button onclick="sendMessage()">
+
+Send
+
+</button>
+
+</center>
+
+<script>
+
+async function sendMessage(){
+ alert("Button clicked");
+
+let msg=document.getElementById("message").value;
+
+if(msg=="") return;
+
+document.getElementById("chat-box").innerHTML +=
+"<p><b>You:</b> "+msg+"</p>";
+
+let response=await fetch("/chat",{
+
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+
+message:msg
+
+})
+
+});
+
+let data=await response.json();
+
+document.getElementById("chat-box").innerHTML +=
+"<p><b>AI:</b> "+data.reply+"</p>";
+
+document.getElementById("message").value="";
+
+}
+
+</script>
+
+</body>
+
+</html>

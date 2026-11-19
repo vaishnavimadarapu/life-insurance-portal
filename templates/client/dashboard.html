@@ -1,0 +1,141 @@
+{% extends "common/layout.html" %}
+
+{% block content %}
+<div class="row g-4">
+    <div class="col-md-12">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h2 class="fw-bold">My Insurance Portfolio</h2>
+                <p class="text-muted">Welcome, {{ current_user.name }}. View and manage your active policies.</p>
+            </div>
+            <div class="d-flex gap-2">
+    <a href="/chatbot" class="btn btn-primary">
+        🤖 AI Assistant
+    </a>
+
+    <button class="btn btn-outline-primary"
+            data-bs-toggle="modal"
+            data-bs-target="#msgModal">
+        Contact Agent
+    </button>
+        </div>
+    </div>
+
+    <div class="col-md-12">
+        <div class="card p-4">
+            <h4 class="mb-3">Active Policies</h4>
+            {% if policies %}
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Policy ID</th>
+                            <th>Policy Name</th>
+                            <th>Coverage</th>
+                            <th>Status</th>
+                            <th>Created On</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for policy in policies %}
+                        <tr>
+                            <td>#{{ policy.policy_id }}</td>
+                            <td><strong>{{ policy.policy_name }}</strong></td>
+                            <td>${{ "{:,.2f}".format(policy.amount|float) }}</td>
+                            <td><span class="badge bg-success">{{ policy.status }}</span></td>
+                            <td>{{ policy.created_at }}</td>
+                            <td>
+                                <button class="btn btn-sm btn-outline-dark">View Details</button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="text-center py-5">
+                <p class="text-muted">You don't have any active policies yet.</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Secure Files Section -->
+    <div class="col-md-12 mt-4">
+        <div class="card p-4">
+            <h4 class="mb-3">Secure Documents</h4>
+            {% if files %}
+            <div class="table-responsive">
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th>Filename</th>
+                            <th>Uploaded On</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for file in files %}
+                        <tr>
+                            <td>{{ file.filename }}</td>
+                            <td>{{ file.timestamp }}</td>
+                            <td>
+                                <a href="/download/{{ file.doc_id }}/encrypted"
+                                    class="btn btn-sm btn-outline-warning">Download Encrypted</a>
+                                <a href="/download/{{ file.doc_id }}/decrypted"
+                                    class="btn btn-sm btn-outline-success">Decrypt & View</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <p class="text-muted">No secure documents available.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Secure Messaging Section -->
+    <div class="col-md-12 mt-4">
+        <div class="card p-4">
+            <h4 class="mb-3">Encrypted Communications</h4>
+            <div class="alert alert-secondary small">
+                🛡️ All messages are end-to-end encrypted.
+            </div>
+            <a href="{{ url_for('view_messages') }}" class="btn btn-outline-dark">View Secure Inbox</a>
+        </div>
+    </div>
+</div>
+
+<!-- Send Message Modal -->
+<div class="modal fade" id="msgModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Secure Message to Admin/Agent</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form action="{{ url_for('send_message') }}" method="POST">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Recipient Email</label>
+                        <input type="email" name="recipient_email" class="form-control" required
+                            placeholder="agent@example.com">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Message</label>
+                        <textarea name="message" class="form-control" rows="4" required
+                            placeholder="Type your secure message..."></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Send Encrypted</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

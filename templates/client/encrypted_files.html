@@ -1,0 +1,33 @@
+{% extends "common/layout.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <h2 class="fw-bold mb-4">Encrypted Document Vault</h2>
+        <div class="row g-4">
+            {% for file in files %}
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm border-warning">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="bi bi-file-earmark-lock-fill h1 text-warning me-3"></i>
+                            <h5 class="mb-0">{{ file.filename }}</h5>
+                        </div>
+                        <p class="text-muted small">Status: Encrypted (ElGamal)</p>
+                        <p class="text-muted small">Added: {{ file.timestamp }}</p>
+                        <div class="d-grid">
+                            <a href="/download/{{ file.doc_id }}/encrypted" class="btn btn-warning">Download Partitioned
+                                Ciphertext</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <div class="col-12 text-center py-5">
+                <p class="text-muted">No encrypted documents found in your vault.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

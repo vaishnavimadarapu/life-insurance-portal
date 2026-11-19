@@ -1,0 +1,48 @@
+{% extends "common/layout.html" %}
+
+{% block content %}
+<div class="row g-4">
+    <div class="col-md-12">
+        <h2 class="fw-bold">Admin Dashboard</h2>
+        <p class="text-muted">System Overview and Key Metrics</p>
+    </div>
+<a href="/chatbot" class="btn btn-primary">
+    🤖 AI Assistant
+</a>
+    <div class="col-md-3">
+        <div class="card text-center p-4 h-100">
+            <div class="display-5 fw-bold text-primary">{{ stats.agents }}</div>
+            <div class="text-secondary uppercase small fw-bold">Active Agents</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-center p-4 h-100">
+            <div class="display-5 fw-bold text-success">{{ stats.clients }}</div>
+            <div class="text-secondary uppercase small fw-bold">Total Clients</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-center p-4 h-100">
+            <div class="display-5 fw-bold text-info">{{ stats.policies }}</div>
+            <div class="text-secondary uppercase small fw-bold">Policies Issued</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-center p-4 h-100">
+            <div class="display-5 fw-bold text-warning">{{ stats.logs }}</div>
+            <div class="text-secondary uppercase small fw-bold">Audit Entries</div>
+        </div>
+    </div>
+
+    <div class="col-md-12 mt-4">
+        <div class="card p-4">
+            <h4 class="mb-3">Quick Actions</h4>
+            <div class="d-flex gap-2">
+                <a href="{{ url_for('manage_agents') }}" class="btn btn-outline-primary">Manage Agents</a>
+                <a href="{{ url_for('manage_clients') }}" class="btn btn-outline-primary">Manage Clients</a>
+                <a href="{{ url_for('admin_audit_logs') }}" class="btn btn-outline-dark">View System Logs</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends "common/layout.html" %}
+
+{% block content %}
+<div class="row g-4">
+    <div class="col-md-12">
+        <h2 class="fw-bold">Agent Dashboard</h2>
+        <p class="text-muted">Welcome back, {{ current_user.name }}. Manage your clients and policies securely.</p>
+    </div>
+    <a href="/chatbot" class="btn btn-primary">
+    🤖 AI Assistant
+    </a>
+    <div class="col-md-6 col-lg-4">
+        <div class="card p-4 text-center h-100 border-start border-primary border-4">
+            <div class="h1 mb-0">{{ clients_count }}</div>
+            <div class="text-muted">Total Clients</div>
+            <a href="#" class="btn btn-sm btn-link mt-2">View Clients</a>
+        </div>
+    </div>
+
+    <div class="col-md-12">
+        <div class="card p-4 mt-4">
+            <h4>Quick Actions</h4>
+            <div class="row mt-3">
+                <div class="col-md-3">
+                    <a href="{{ url_for('create_policy') }}" class="btn btn-primary w-100 py-3">
+                        📄 Create Policy
+                    </a>
+                </div>
+                <div class="col-md-3">
+                    <a href="#" class="btn btn-outline-dark w-100 py-3">
+                        ✉️ Secure Message
+                    </a>
+                </div>
+                <div class="col-md-3">
+                    <a href="{{ url_for('agent_upload_file') }}" class="btn btn-outline-dark w-100 py-3">
+                        📁 Upload Files
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

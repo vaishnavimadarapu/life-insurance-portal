@@ -1,0 +1,39 @@
+{% extends "common/layout.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <h2 class="fw-bold mb-4">My Policies</h2>
+        <div class="card p-4 shadow-sm">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Policy ID</th>
+                            <th>Policy Name</th>
+                            <th>Coverage</th>
+                            <th>Status</th>
+                            <th>Created On</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for policy in policies %}
+                        <tr>
+                            <td>#{{ policy.policy_id }}</td>
+                            <td><strong>{{ policy.policy_name }}</strong></td>
+                            <td>${{ "{:,.2f}".format(policy.amount|float) }}</td>
+                            <td><span class="badge bg-success">{{ policy.status }}</span></td>
+                            <td>{{ policy.created_at }}</td>
+                            <td>
+                                <button class="btn btn-sm btn-outline-dark">View Details</button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

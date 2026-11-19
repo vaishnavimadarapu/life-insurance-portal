@@ -1,0 +1,35 @@
+{% extends "common/layout.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow p-4">
+            <h2 class="mb-4">Create New Policy</h2>
+            <form method="POST">
+                <div class="mb-3">
+                    <label class="form-label">Client Email</label>
+                    <select name="client_email" class="form-select" required>
+                        <option value="">Select Client</option>
+                        {% for client in clients %}
+                        <option value="{{ client.email }}">{{ client.name }} ({{ client.email }})</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Policy Name</label>
+                    <input type="text" name="policy_name" class="form-control" required
+                        placeholder="e.g., Term Life Gold">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Coverage Amount ($)</label>
+                    <input type="number" name="amount" class="form-control" required placeholder="500000">
+                </div>
+                <div class="d-grid gap-2 mt-4">
+                    <button type="submit" class="btn btn-primary btn-lg">Generate Policy</button>
+                    <a href="{{ url_for('agent_dashboard') }}" class="btn btn-light">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

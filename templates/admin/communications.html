@@ -1,0 +1,27 @@
+{% extends "common/layout.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <h2 class="fw-bold mb-4">Monitor System Communications</h2>
+        <div class="card p-3 border-danger mb-4">
+            <p class="text-danger small mb-0"><i class="bi bi-eye"></i> Admin Mode: Monitoring encrypted message
+                metadata only. Contents remain private and encrypted.</p>
+        </div>
+
+        <div class="list-group shadow-sm">
+            {% for msg in messages %}
+            <div class="list-group-item">
+                <div class="d-flex w-100 justify-content-between">
+                    <h6 class="mb-1"><strong>From:</strong> {{ msg.sender_email }} → <strong>To:</strong> {{
+                        msg.recipient_email }}</h6>
+                    <small class="text-muted">{{ msg.timestamp }}</small>
+                </div>
+                <p class="mb-1 text-monospace small">[ENCRYPTED DATA BLOCK]</p>
+                <small class="text-primary">ElGamal Ciphertext verified</small>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

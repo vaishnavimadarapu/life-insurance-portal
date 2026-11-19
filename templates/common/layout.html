@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title or "Life Insurance Portal" }}</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-navy: #0a192f;
+            --accent-blue: #64ffda;
+            --text-gray: #8892b0;
+            --bg-dark: #0f172a;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background-color: var(--primary-navy);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-brand {
+            font-weight: 600;
+            color: white !important;
+        }
+
+        .sidebar {
+            min-height: calc(100vh - 56px);
+            background: white;
+            border-right: 1px solid #e2e8f0;
+        }
+
+        .nav-link {
+            color: #475569;
+            padding: 12px 20px;
+            transition: all 0.3s;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            background: #f1f5f9;
+            color: var(--primary-navy);
+            border-left: 4px solid var(--primary-navy);
+        }
+
+        .card {
+            border: none;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            border-radius: 12px;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-navy);
+            border-color: var(--primary-navy);
+        }
+
+        .btn-primary:hover {
+            background-color: #1e293b;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">🛡️ Life Insurance Portal</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    {% if current_user.is_authenticated %}
+                    <li class="nav-item">
+                        <span class="nav-link text-light">Welcome, {{ current_user.name }} ({{
+                            current_user.role|capitalize }})</span>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-outline-light btn-sm ms-2" href="{{ url_for('logout') }}">Logout</a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('login') }}">Login</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('signup') }}">Sign Up</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid flex-grow-1">
+        <div class="row h-100">
+            {% if current_user.is_authenticated %}
+            <nav class="col-md-2 d-none d-md-block sidebar py-4">
+                <div class="position-sticky">
+                    <ul class="nav flex-column">
+                        {% if current_user.role == 'admin' %}
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('admin_dashboard') }}">Dashboard</a>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('manage_agents') }}">Manage Agents</a>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('manage_clients') }}">Manage
+                                Clients</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('admin_view_policies') }}">View
+                                Policies</a></li>
+                        <li class="nav-item"><a class="nav-link"
+                                href="{{ url_for('admin_communications') }}">Communications</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('admin_reports') }}">Reports</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('admin_audit_logs') }}">Audit Logs</a>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('admin_search') }}">Search System</a>
+                        </li>
+                        {% elif current_user.role == 'agent' %}
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('agent_dashboard') }}">Dashboard</a>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('agent_clients') }}">Clients</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('create_policy') }}">Create Policy</a>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('agent_upload_file') }}">Upload
+                                Doc</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('view_messages') }}">Messages</a></li>
+                        <li class="nav-item"><a class="nav-link"
+                                href="{{ url_for('agent_commissions') }}">Commissions</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('agent_payments') }}">Client
+                                Payments</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('compare_policies') }}">Compare
+                                Policies</a></li>
+                        {% elif current_user.role == 'client' %}
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('client_dashboard') }}">Dashboard</a>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('client_policies_view') }}">My
+                                Policies</a></li>
+                        <li class="nav-item"><a class="nav-link"
+                                href="{{ url_for('client_agent_communication') }}">Communication</a></li>
+                        <li class="nav-item"><a class="nav-link"
+                                href="{{ url_for('client_encrypted_files') }}">Encrypted Vault</a></li>
+                        <li class="nav-item"><a class="nav-link"
+                                href="{{ url_for('client_decrypted_files') }}">Decrypted Files</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('client_payments') }}">My Payments</a>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('client_profile') }}">My Profile</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </nav>
+            <main class="col-md-10 ms-sm-auto px-md-4 py-4">
+                {% else %}
+                <main class="col-12 px-md-4 py-4">
+                    {% endif %}
+
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                    {% for category, message in messages %}
+                    <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                    {% endwith %}
+
+                    {% block content %}{% endblock %}
+                </main>
+        </div>
+    </div>
+
+    <footer class="footer py-4 bg-white border-top mt-auto">
+        <div class="container text-center">
+            <span class="text-muted small">&copy; 2026 Life Insurance Secure Portal. All Rights Reserved. | End-to-End
+                ElGamal Encryption Enabled.</span>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

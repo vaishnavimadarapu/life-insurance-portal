@@ -1,0 +1,39 @@
+{% extends "common/layout.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <h2 class="fw-bold mb-4">All Insurance Policies</h2>
+        <div class="card p-3 shadow-sm">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead class="table-navy">
+                        <tr>
+                            <th>ID</th>
+                            <th>Policy Name</th>
+                            <th>Client</th>
+                            <th>Agent</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                            <th>Created</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for policy in policies %}
+                        <tr>
+                            <td>#{{ policy.policy_id }}</td>
+                            <td>{{ policy.policy_name }}</td>
+                            <td>{{ policy.client_email }}</td>
+                            <td>{{ policy.agent_email }}</td>
+                            <td>${{ "{:,.2f}".format(policy.amount|float) }}</td>
+                            <td><span class="badge bg-success">{{ policy.status }}</span></td>
+                            <td>{{ policy.created_at }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends "common/layout.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <h2 class="fw-bold mb-4">Assigned Clients</h2>
+        <div class="card p-4 shadow-sm">
+            <table class="table table-hover align-middle">
+                <thead>
+                    <tr>
+                        <th>Client Name</th>
+                        <th>Email</th>
+                        <th>Policies Count</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for client in clients %}
+                    <tr>
+                        <td><strong>{{ client.name }}</strong></td>
+                        <td>{{ client.email }}</td>
+                        <td><span class="badge bg-primary">{{ client.policy_count }}</span></td>
+                        <td><span class="badge bg-success">Active</span></td>
+                        <td>
+                            <a href="{{ url_for('create_policy') }}?email={{ client.email }}"
+                                class="btn btn-sm btn-outline-dark">Add Policy</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
